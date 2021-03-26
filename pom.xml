@@ -10,9 +10,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.libra.spring</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>study_spring</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>demo</name>
+    <name>study_spring</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
