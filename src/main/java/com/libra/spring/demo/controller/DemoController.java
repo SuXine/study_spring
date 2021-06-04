@@ -27,8 +27,9 @@ public class DemoController {
 
     @GetMapping("/demo")
     public String demo(){
-        teacherService.demo();
-        studentService.demo();
+//        teacherService.demo();
+//        studentService.demo();
+        studentService.sel(1L);
         return "hello word";
     }
 }

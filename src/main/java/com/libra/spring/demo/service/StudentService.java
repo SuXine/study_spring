@@ -1,10 +1,12 @@
 package com.libra.spring.demo.service;
 
-import com.libra.spring.demo.ann.ComponentMy;
+import com.libra.spring.demo.dao.StudentMapper;
+import com.libra.spring.demo.model.entity.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * Description:
@@ -12,16 +14,18 @@ import org.springframework.stereotype.Component;
  * @author sx
  * @date 2021-02-26
  */
-@ComponentMy
-@Lazy
+@Component
 public class StudentService {
 
-    public StudentService() {
-        System.out.println("懒加载~");
-    }
+    @Autowired
+    private StudentMapper studentMapper;
 
     public void demo() {
         System.out.println("StudentService DEMO");
+    }
+
+    public List<Student> sel(Long id) {
+        return studentMapper.selectByNameAndId(null, id);
     }
 
 }
