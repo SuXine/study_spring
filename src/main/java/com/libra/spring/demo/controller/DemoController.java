@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.annotation.PostConstruct;
-
 /**
  * Description: demo
  *
@@ -27,9 +25,7 @@ public class DemoController {
 
     @GetMapping("/demo")
     public String demo(){
-//        teacherService.demo();
-//        studentService.demo();
-        studentService.sel(1L);
+        studentService.select(null);
         return "hello word";
     }
 }
