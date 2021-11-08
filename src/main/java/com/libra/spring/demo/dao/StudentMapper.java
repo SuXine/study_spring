@@ -3,6 +3,7 @@ package com.libra.spring.demo.dao;
 import com.libra.spring.demo.model.entity.Student;
 
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.cursor.Cursor;
@@ -18,7 +19,7 @@ import java.util.Map;
  * @Date: 2018/9/26 0026
  * @Time: 15:20
  */
-@Repository
+@Mapper
 public interface StudentMapper {
  
     void selVoid(ResultHandler demo);
@@ -31,5 +32,9 @@ public interface StudentMapper {
     List<Student> selList();
 
     List<Student> selectByNameAndId(@Param("name")String name, @Param("id")Long id);
+
+    int updateById(@Param("updated")Student updated);
+
+    int insertSelective(Student student);
 
 }

@@ -8,9 +8,11 @@ import org.apache.ibatis.cursor.Cursor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Description:
@@ -30,20 +32,25 @@ public class StudentService {
 
 
     @Transactional
-    public List<Student> select(Long id) {
+    public void select() {
 //        studentMapper.selList();
 //        studentMapper.selMap();
 //        studentMapper.selVoid(new DemoResultHandler());
-        studentMapper.selCursor();
-        return new ArrayList<>();
+//        studentMapper.selCursor();
+        studentMapper.selectByNameAndId("小绿238718973918", 2L);
     }
 
-    public List<Student> update(Long id) {
-        //        studentMapper.selList();
-        //        studentMapper.selMap();
-        //        studentMapper.selVoid(new DemoResultHandler());
-        studentMapper.selCursor();
-        return new ArrayList<>();
+    public void update() {
+        Student update = new Student();
+        update.setId(1L);
+        update.setName("小绿" + Math.random());
+        studentMapper.updateById(update);
+    }
+
+    public void insert() {
+        Student insert = new Student();
+        insert.setName("小新" + Math.random());
+        studentMapper.insertSelective(insert);
     }
 
 }
