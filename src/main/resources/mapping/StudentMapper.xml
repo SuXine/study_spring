@@ -1,32 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace: mapper.xml对应的mapper接口类 -->
 <mapper namespace="com.libra.spring.demo.dao.StudentMapper">
+    <!-- cache-ref.namespace: 配置需要缓存的mapper接口 -->
+    <cache-ref namespace="com.libra.spring.demo.dao.StudentMapper"/>
 
-    <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student">
+    <!-- cache.type 默认值为PERPETUAL，缓存加载器的类型，如果不想使用PERPETUAL，可以传入自定义的集成cache的类-->
+    <!-- cache.eviction 默认值为LRU，LRU - 最近最少使用、FIFO - 先进先出、SOFT - 软引用、WEAK - 弱引用 -->
+    <!-- cache.flushInterval 缓存数据的刷新时间 -->
+    <!-- cache.size 缓存数据的大小 -->
+    <!-- cache.readOnly 默认值为false 是否只读 -->
+    <!-- cache.blocking 默认值为false 是否阻塞 -->
+    <cache type="PERPETUAL" eviction="LRU" flushInterval="6000" size="100" readOnly="false"
+           blocking="false"/>
+
+    <!-- parameterMap.id 存储到configuration.parameterMaps中的key -->
+    <!-- parameterMap.type 参数对象的类 -->
+    <parameterMap id="helloParameterMap" type="com.libra.spring.demo.model.entity.Student">
+        <!-- parameter.property 类中的属性名 -->
+        <!-- parameter.javaType 类中的属性的类型 -->
+        <!-- parameter.jdbcType 类中的属性的数据库类型 -->
+        <!-- parameter.mode 参数模式 IN - 入参 OUT - 出参 INOUT - 入参和出参 -->
+        <!-- parameter.typeHandler 该类型使用的类型处理器 -->
+        <!-- parameter.resultMap 结果对象 如果属性为对象时可以设置返回值为 本类的resultMap的ID -->
+        <!-- parameter.scale 小数点保留位数 -->
+        <parameter property="id" javaType="java.lang.Long" jdbcType="BIGINT" mode="IN" resultMap=""
+                   typeHandler="org.apache.ibatis.type.BigIntegerTypeHandler" scale=""/>
+
+        <parameter property="name" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"
+                   resultMap="" typeHandler="org.apache.ibatis.type.StringTypeHandler" scale=""/>
+    </parameterMap>
+
+    <resultMap id="helloResultMap" type="com.libra.spring.demo.model.entity.Student">
         <!--@Table student-->
-        <result column="id" jdbcType="BIGINT" property="id" />
-        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="id" jdbcType="BIGINT" property="id"/>
+    </resultMap>
+
+    <!-- resultMap.id 存储到configuration的resultMaps中的key 或者在引用中使用 -->
+    <!-- resultMap.type 返回的对象类型 -->
+    <!-- resultMap.extends 继承的resultMap，会取两者并集 -->
+    <!-- resultMap.autoMapping 是否启动自动映射 -->
+    <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
+               extends="helloResultMap" autoMapping="true">
+        <!--@Table student-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+
+
+        <!-- resultMap.collection 用于嵌套查询 如果不配置select 可在内部配置 id 和 result 标签 -->
+        <!-- resultMap.collection.property 属性名 -->
+        <!-- resultMap.collection.column 列名 -->
+        <!-- resultMap.collection.jdbcType 数据库类型 -->
+        <!-- resultMap.collection.javaType 属性类 -->
+        <!-- resultMap.collection.autoMapping 是否自动映射 -->
+        <!-- resultMap.collection.typeHandler 类型处理器 -->
+
+        <!-- 通过设置的select执行 -->
+        <!-- resultMap.collection.select 需要执行的sql (可以不设置 -->
+
+        <!-- 设置多结果设置子对象 -->
+        <!-- resultMap.collection.foreignColumn 查询有多个结果集时，通过设置的字段做映射关系，取设置的resultSet的结果集，映射到设置的property属性，用column比较（ 无需和select配置同时使用 处理结果在结果处理器之后所以返回void时无法使用 ） -->
+        <!-- resultMap.collection.resultSet 返回有多个结果集时所取的结果集 -->
+        <!-- resultMap.collection.resultMap 结果映射 （和select中的resultMap 不需要重复设置） -->
+
+        <!-- resultMap.collection.notNullColumn 不能为空的列（如果为空 就不会创建子对象 - 待认证 -->
+        <!-- resultMap.collection.columnPrefix 多个表关联查询时使用，用于区分association的值 - 待认证 -->
+
+        <collection property="genderInfo" column="gender" jdbcType="VARCHAR"
+                    javaType="com.libra.spring.demo.model.entity.GenderInfo"
+                    select="com.libra.spring.demo.dao.GenderInfoMapper.selectByPrimaryKey"
+                    autoMapping="true"
+                    fetchType="lazy"
+                    notNullColumn="used">
+        </collection>
+
     </resultMap>
 
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, `name`
+        id, `name`,gender
     </sql>
 
-    <select id="selVoid" resultMap="BaseResultMap" parameterType="com.libra.spring.demo.dao.DemoResultHandler">
-        select <include refid="Base_Column_List"/> from student
+    <select id="selValidCollectionForeignColumn"
+            resultMap="BaseResultMap"
+            resultSets="student,gender"
+            parameterType="com.libra.spring.demo.dao.DemoResultHandler">
+        select id, `name`, gender
+        from student;
+                select id, `name`
+                from gender_info;
     </select>
+
+
+    <select id="selVoid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
+    </select>
+
 
     <select id="selCursor" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from student
+        select
+        <include refid="Base_Column_List"/>
+        from student
     </select>
 
-    <select id="selMap" resultMap="BaseResultMap" statementType="STATEMENT" >
-        select <include refid="Base_Column_List"/> from student
+    <select id="selMap" resultMap="BaseResultMap" statementType="STATEMENT">
+        select
+        <include refid="Base_Column_List"/>
+        from student
     </select>
 
-    <select id="selList" resultSets="" resultMap="BaseResultMap" >
-        select <include refid="Base_Column_List"/> from student
+    <select id="selList" resultSets="" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from student
     </select>
 
     <!--auto generated by MybatisCodeHelper on 2021-05-24-->
@@ -36,10 +125,10 @@
         from student
         <where>
             <if test="name != null">
-                and `name`=#{name,jdbcType=VARCHAR}
+                and `name` = #{name,jdbcType=VARCHAR}
             </if>
             <if test="id != null">
-                and id=#{id,jdbcType=BIGINT}
+                and id = #{id,jdbcType=BIGINT}
             </if>
         </where>
     </select>
@@ -55,10 +144,10 @@
                 name = #{updated.name,jdbcType=VARCHAR},
             </if>
         </set>
-        where id=#{updated.id,jdbcType=BIGINT}
+        where id = #{updated.id,jdbcType=BIGINT}
     </update>
 
-<!--auto generated by MybatisCodeHelper on 2021-09-10-->
+    <!--auto generated by MybatisCodeHelper on 2021-09-10-->
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO student
 

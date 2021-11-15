@@ -33,11 +33,16 @@ public class StudentService {
 
     @Transactional
     public void select() {
-//        studentMapper.selList();
-//        studentMapper.selMap();
-//        studentMapper.selVoid(new DemoResultHandler());
-//        studentMapper.selCursor();
-        studentMapper.selectByNameAndId("小绿238718973918", 2L);
+        List<Student> students = studentMapper.selList();
+        //        studentMapper.selMap();
+        //        studentMapper.selVoid(new DemoResultHandler());
+        //        studentMapper.selCursor();
+        //        studentMapper.selectByNameAndId("小绿238718973918", 2L);
+
+        //        List<Student> students = studentMapper.selValidCollectionForeignColumn();
+        students.forEach(item -> {
+            System.out.println(item.toString());
+        });
     }
 
     public void update() {

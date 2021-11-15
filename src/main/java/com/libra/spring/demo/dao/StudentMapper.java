@@ -1,5 +1,7 @@
 package com.libra.spring.demo.dao;
  
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.libra.spring.demo.ann.ComponentMy;
 import com.libra.spring.demo.model.entity.Student;
 
 import org.apache.ibatis.annotations.MapKey;
@@ -15,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author:wjup
- * @Date: 2018/9/26 0026
- * @Time: 15:20
+ * @Author:bz
  */
 @Mapper
-public interface StudentMapper {
+public interface StudentMapper extends DefaultPrettyPrinter.Indenter {
  
     void selVoid(ResultHandler demo);
+
+    List<Student> selValidCollectionForeignColumn();
 
     Cursor<Student> selCursor();
 

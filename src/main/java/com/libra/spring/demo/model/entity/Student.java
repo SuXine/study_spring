@@ -1,13 +1,15 @@
 package com.libra.spring.demo.model.entity;
- 
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * @Author:wjup
- * @Date: 2018/9/26 0026
- * @Time: 14:39
+ * @author : bz
  */
-public class Student {
+public class Student implements Serializable {
     private Long id;
     private String name;
+    private GenderInfo genderInfo;
 
     public Long getId() {
         return id;
@@ -25,11 +27,20 @@ public class Student {
         this.name = name;
     }
 
+    public GenderInfo getGenderInfo() {
+        return genderInfo;
+    }
+
+    public void setGenderInfo(GenderInfo genderInfo) {
+        this.genderInfo = genderInfo;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", genderInfo=" + genderInfo +
                 '}';
     }
 }
