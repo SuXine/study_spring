@@ -42,39 +42,61 @@
     <!-- resultMap.autoMapping 是否启动自动映射 -->
     <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
                extends="idBaseResultMap" autoMapping="true">
+
+        <!-- resultMap.constructor 会使用构造函数 -->
+        <!-- resultMap.constructor.idArg ID参数，使用会提升性能 （具体原因待考证） -->
+        <!-- resultMap.constructor.arg 参数 -->
+        <constructor>
+            <!-- resultMap.constructor.arg/idArg.column 列名 -->
+            <!-- resultMap.constructor.arg/idArg.name 属性名 -->
+            <!-- resultMap.constructor.arg/idArg.jdbcType 数据库类型 -->
+            <!-- resultMap.constructor.arg/idArg.javaType 返回的数据类型 -->
+            <!-- resultMap.constructor.arg/idArg.select 执行的sql -->
+            <!-- resultMap.constructor.arg/idArg.typeHandler 类型处理器 -->
+            <!-- resultMap.constructor.arg/idArg.resultMap 返回使用的结果映射 （不能和select同时使用） -->
+            <idArg name="id" column="id" />
+            <arg column="class_number"
+                 name="classNumber"
+                 jdbcType="BIGINT"
+                 javaType="com.libra.spring.demo.model.entity.ClassInfo"
+                 select="com.libra.spring.demo.dao.ClassInfoMapper.selectById"
+                 typeHandler="com.libra.spring.demo.typeHandle.ClassInfoHandler"
+            />
+        </constructor>
+
+
         <!--@Table student-->
         <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="class_number" jdbcType="BIGINT" property="classNumber"/>
         <result column="height" jdbcType="INTEGER" property="height"/>
         <result column="weight" jdbcType="INTEGER" property="weight"/>
 
 
-        <!-- resultMap.collection 用于嵌套查询 如果不配置select 可在内部配置 id 和 result 标签 -->
-        <!-- resultMap.collection.property 属性名 -->
-        <!-- resultMap.collection.column 列名 -->
-        <!-- resultMap.collection.jdbcType 数据库类型 -->
-        <!-- resultMap.collection.javaType 属性类 -->
-        <!-- resultMap.collection.autoMapping 是否自动映射 -->
-        <!-- resultMap.collection.typeHandler 类型处理器 -->
+        <!-- resultMap.collection/association 对结果查询 collection: 1对N association：1对1-->
+        <!-- resultMap.collection/association.property 属性名 -->
+        <!-- resultMap.collection/association.column 列名 -->
+        <!-- resultMap.collection/association.jdbcType 数据库类型 -->
+        <!-- resultMap.collection/association.javaType 属性类 -->
+        <!-- resultMap.collection/association.autoMapping 是否自动映射 -->
+        <!-- resultMap.collection/association.typeHandler 类型处理器 -->
 
         <!-- 通过设置的select执行 -->
-        <!-- resultMap.collection.select 需要执行的sql (可以不设置 -->
+        <!-- resultMap.collection/association.select 需要执行的sql (可以不设置 -->
 
         <!-- 设置多结果设置子对象 -->
-        <!-- resultMap.collection.foreignColumn 查询有多个结果集时，通过设置的字段做映射关系，取设置的resultSet的结果集，映射到设置的property属性，用column比较（ 无需和select配置同时使用 处理结果在结果处理器之后所以返回void时无法使用 ） -->
-        <!-- resultMap.collection.resultSet 返回有多个结果集时所取的结果集 -->
-        <!-- resultMap.collection.resultMap 结果映射 （和select中的resultMap 不需要重复设置） -->
+        <!-- resultMap.collection/association.foreignColumn 查询有多个结果集时，通过设置的字段做映射关系，取设置的resultSet的结果集，映射到设置的property属性，用column比较（ 无需和select配置同时使用 处理结果在结果处理器之后所以返回void时无法使用 ） -->
+        <!-- resultMap.collection/association.resultSet 返回有多个结果集时所取的结果集 -->
+        <!-- resultMap.collection/association.resultMap 结果映射 （和select中的resultMap 不需要重复设置） -->
 
-        <!-- resultMap.collection.notNullColumn 不能为空的列（如果为空 就不会创建子对象 - 待认证 -->
-        <!-- resultMap.collection.columnPrefix 多个表关联查询时使用，用于区分association的值 - 待认证 -->
+        <!-- resultMap.collection/association.notNullColumn 不能为空的列（如果为空 就不会创建子对象 - 待认证 -->
+        <!-- resultMap.collection/association.columnPrefix 多个表关联查询时使用，用于区分association的值 - 待认证 -->
 
-        <collection property="gender" column="gender" jdbcType="VARCHAR"
+        <association property="gender" column="gender" jdbcType="VARCHAR"
                     javaType="com.libra.spring.demo.model.entity.GenderInfo"
                     select="com.libra.spring.demo.dao.GenderInfoMapper.selectByPrimaryKey"
                     autoMapping="true"
                     fetchType="lazy"
                     notNullColumn="used">
-        </collection>
+        </association>
 
         <!-- resultMap.discriminator.column 做判断的列名 -->
         <!-- resultMap.discriminator.jdbcType 数据库类型 -->
@@ -92,9 +114,6 @@
             </case>
             <case value="2" resultType="com.libra.spring.demo.model.entity.Student">
                 <result property="base" column="weight" />
-            </case>
-            <case value="3" resultType="com.libra.spring.demo.model.entity.Student">
-                <result property="base" column="class_number" />
             </case>
         </discriminator>
     </resultMap>

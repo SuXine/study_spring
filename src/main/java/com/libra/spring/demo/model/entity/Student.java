@@ -12,7 +12,7 @@ public class Student implements Serializable {
 
     private String name;
 
-    private Long classNumber;
+    private ClassInfo classNumber;
 
     private Integer height;
 
@@ -46,11 +46,11 @@ public class Student implements Serializable {
         this.gender = gender;
     }
 
-    public Long getClassNumber() {
+    public ClassInfo getClassNumber() {
         return classNumber;
     }
 
-    public void setClassNumber(Long classNumber) {
+    public void setClassNumber(ClassInfo classNumber) {
         this.classNumber = classNumber;
     }
 
@@ -76,6 +76,18 @@ public class Student implements Serializable {
 
     public void setBase(Double base) {
         this.base = base;
+    }
+
+    public Student() {
+    }
+
+    public Student(ClassInfo classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Student(Long id, ClassInfo classNumber) {
+        this.id = id;
+        this.classNumber = classNumber;
     }
 
     @Override
