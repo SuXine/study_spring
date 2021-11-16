@@ -79,13 +79,16 @@ public class Student implements Serializable {
     }
 
     public Student() {
+        System.out.println("使用无参构造器");
     }
 
     public Student(ClassInfo classNumber) {
+        System.out.println("使用classNumber："+classNumber.toString()+" 的构造器");
         this.classNumber = classNumber;
     }
 
     public Student(Long id, ClassInfo classNumber) {
+        System.out.println("使用id："+id+",classNumber："+classNumber.toString()+" 的构造器");
         this.id = id;
         this.classNumber = classNumber;
     }

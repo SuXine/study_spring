@@ -43,7 +43,7 @@
     <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
                extends="idBaseResultMap" autoMapping="true">
 
-        <!-- resultMap.constructor 会使用构造函数 -->
+        <!-- resultMap.constructor 会使用构造函数 如果构造参数不是返回的所有值，会多次构建 -->
         <!-- resultMap.constructor.idArg ID参数，使用会提升性能 （具体原因待考证） -->
         <!-- resultMap.constructor.arg 参数 -->
         <constructor>
@@ -94,7 +94,7 @@
                     javaType="com.libra.spring.demo.model.entity.GenderInfo"
                     select="com.libra.spring.demo.dao.GenderInfoMapper.selectByPrimaryKey"
                     autoMapping="true"
-                    fetchType="lazy"
+                    fetchType="eager"
                     notNullColumn="used">
         </association>
 
@@ -132,14 +132,7 @@
             resultMap="BaseResultMap"
             resultSets="student,gender"
             parameterType="com.libra.spring.demo.dao.DemoResultHandler">
-        select id,
-               `name`,
-               gender,
-               class_number,
-               height,
-               weight,
-               height * 1.2 as men_base,
-               weight * 1.2 as women_base
+        select <include refid="Base_Column_List"/>
         from student;
 
         select id,
