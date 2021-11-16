@@ -1,15 +1,26 @@
 package com.libra.spring.demo.model.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * @author : bz
+ * @description: ${desc}
+ * @author: sx
+ * @date: 2021-3:53 下午-2021/11/16
  */
 public class Student implements Serializable {
     private Long id;
+
     private String name;
-    private GenderInfo genderInfo;
+
+    private Long classNumber;
+
+    private Integer height;
+
+    private Integer weight;
+
+    private Double base;
+
+    private GenderInfo gender;
 
     public Long getId() {
         return id;
@@ -27,12 +38,44 @@ public class Student implements Serializable {
         this.name = name;
     }
 
-    public GenderInfo getGenderInfo() {
-        return genderInfo;
+    public GenderInfo getGender() {
+        return gender;
     }
 
-    public void setGenderInfo(GenderInfo genderInfo) {
-        this.genderInfo = genderInfo;
+    public void setGender(GenderInfo gender) {
+        this.gender = gender;
+    }
+
+    public Long getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(Long classNumber) {
+        this.classNumber = classNumber;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Double getBase() {
+        return base;
+    }
+
+    public void setBase(Double base) {
+        this.base = base;
     }
 
     @Override
@@ -40,7 +83,11 @@ public class Student implements Serializable {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", genderInfo=" + genderInfo +
+                ", classNumber=" + classNumber +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", base=" + base +
+                ", gender=" + gender +
                 '}';
     }
 }

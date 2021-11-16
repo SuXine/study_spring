@@ -32,9 +32,8 @@
                    resultMap="" typeHandler="org.apache.ibatis.type.StringTypeHandler" scale=""/>
     </parameterMap>
 
-    <resultMap id="helloResultMap" type="com.libra.spring.demo.model.entity.Student">
-        <!--@Table student-->
-        <result column="id" jdbcType="BIGINT" property="id"/>
+    <resultMap id="idBaseResultMap" type="com.libra.spring.demo.model.entity.Student">
+        <id column="id" jdbcType="BIGINT" property="id"/>
     </resultMap>
 
     <!-- resultMap.id 存储到configuration的resultMaps中的key 或者在引用中使用 -->
@@ -42,10 +41,12 @@
     <!-- resultMap.extends 继承的resultMap，会取两者并集 -->
     <!-- resultMap.autoMapping 是否启动自动映射 -->
     <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
-               extends="helloResultMap" autoMapping="true">
+               extends="idBaseResultMap" autoMapping="true">
         <!--@Table student-->
-        <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="class_number" jdbcType="BIGINT" property="classNumber"/>
+        <result column="height" jdbcType="INTEGER" property="height"/>
+        <result column="weight" jdbcType="INTEGER" property="weight"/>
 
 
         <!-- resultMap.collection 用于嵌套查询 如果不配置select 可在内部配置 id 和 result 标签 -->
@@ -67,7 +68,7 @@
         <!-- resultMap.collection.notNullColumn 不能为空的列（如果为空 就不会创建子对象 - 待认证 -->
         <!-- resultMap.collection.columnPrefix 多个表关联查询时使用，用于区分association的值 - 待认证 -->
 
-        <collection property="genderInfo" column="gender" jdbcType="VARCHAR"
+        <collection property="gender" column="gender" jdbcType="VARCHAR"
                     javaType="com.libra.spring.demo.model.entity.GenderInfo"
                     select="com.libra.spring.demo.dao.GenderInfoMapper.selectByPrimaryKey"
                     autoMapping="true"
@@ -75,21 +76,56 @@
                     notNullColumn="used">
         </collection>
 
+        <!-- resultMap.discriminator.column 做判断的列名 -->
+        <!-- resultMap.discriminator.jdbcType 数据库类型 -->
+        <!-- resultMap.discriminator.javaType java类型 -->
+        <!-- resultMap.discriminator.typeHandler 类型处理器 -->
+        <discriminator column="class_number"
+                       jdbcType="VARCHAR"
+                       javaType="java.lang.Long">
+
+            <!-- resultMap.discriminator.case.value 判断的值 -->
+            <!-- resultMap.discriminator.case.resultType resultMap的数据类型 -->
+            <!-- resultMap.discriminator.case.resultMap 满足条件时执行的（resultMap）返回映射 （可以在内部配置result属性） -->
+            <case value="1" resultType="com.libra.spring.demo.model.entity.Student">
+                <result property="base" column="height" />
+            </case>
+            <case value="2" resultType="com.libra.spring.demo.model.entity.Student">
+                <result property="base" column="weight" />
+            </case>
+            <case value="3" resultType="com.libra.spring.demo.model.entity.Student">
+                <result property="base" column="class_number" />
+            </case>
+        </discriminator>
     </resultMap>
 
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, `name`,gender
+        id,
+        `name`,
+        gender,
+        class_number,
+        height,
+        weight
     </sql>
 
     <select id="selValidCollectionForeignColumn"
             resultMap="BaseResultMap"
             resultSets="student,gender"
             parameterType="com.libra.spring.demo.dao.DemoResultHandler">
-        select id, `name`, gender
+        select id,
+               `name`,
+               gender,
+               class_number,
+               height,
+               weight,
+               height * 1.2 as men_base,
+               weight * 1.2 as women_base
         from student;
-                select id, `name`
-                from gender_info;
+
+        select id,
+               `name`
+        from gender_info;
     </select>
 
 
