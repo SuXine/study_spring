@@ -42,6 +42,7 @@
     <!-- resultMap.autoMapping 是否启动自动映射 -->
     <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
                extends="idBaseResultMap" autoMapping="true">
+        <!--@Table student-->
 
         <!-- resultMap.constructor 会使用构造函数 如果内部有懒加载，会多次执行构造函数 -->
         <!-- resultMap.constructor.idArg ID参数，使用会提升性能 （具体原因待考证） -->
@@ -64,8 +65,12 @@
             />
         </constructor>
 
-
-        <!--@Table student-->
+        <!-- 所有的result属性一致 -->
+        <!-- resultMap.result.property 属性名 -->
+        <!-- resultMap.result.column 列名 -->
+        <!-- resultMap.result.jdbcType 数据库类型 -->
+        <!-- resultMap.result.javaType 属性java类型 -->
+        <!-- resultMap.result.typeHandler 类型处理器 -->
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="height" jdbcType="INTEGER" property="height"/>
         <result column="weight" jdbcType="INTEGER" property="weight"/>
@@ -89,7 +94,6 @@
 
         <!-- resultMap.collection/association.notNullColumn 不能为空的列（如果为空 就不会创建子对象 - 待认证 -->
         <!-- resultMap.collection/association.columnPrefix 多个表关联查询时使用，用于区分association的值 - 待认证 -->
-
         <association property="gender" column="gender" jdbcType="VARCHAR"
                     javaType="com.libra.spring.demo.model.entity.GenderInfo"
                     select="com.libra.spring.demo.dao.GenderInfoMapper.selectByPrimaryKey"
@@ -98,6 +102,7 @@
                     notNullColumn="used">
         </association>
 
+        <!-- resultMap.discriminator 对某一个列值做判断，并返回不同的数据映射关系 -->
         <!-- resultMap.discriminator.column 做判断的列名 -->
         <!-- resultMap.discriminator.jdbcType 数据库类型 -->
         <!-- resultMap.discriminator.javaType java类型 -->
