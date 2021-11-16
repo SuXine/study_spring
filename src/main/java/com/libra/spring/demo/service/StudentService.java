@@ -40,6 +40,7 @@ public class StudentService {
         //        studentMapper.selectByNameAndId("小绿238718973918", 2L);
 
         //        List<Student> students = studentMapper.selValidCollectionForeignColumn();
+        System.out.println("使用前");
         students.forEach(item -> {
             System.out.println(item.toString());
         });

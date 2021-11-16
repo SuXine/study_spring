@@ -43,7 +43,7 @@
     <resultMap id="BaseResultMap" type="com.libra.spring.demo.model.entity.Student"
                extends="idBaseResultMap" autoMapping="true">
 
-        <!-- resultMap.constructor 会使用构造函数 如果构造参数不是返回的所有值，会多次构建 -->
+        <!-- resultMap.constructor 会使用构造函数 如果内部有懒加载，会多次执行构造函数 -->
         <!-- resultMap.constructor.idArg ID参数，使用会提升性能 （具体原因待考证） -->
         <!-- resultMap.constructor.arg 参数 -->
         <constructor>
