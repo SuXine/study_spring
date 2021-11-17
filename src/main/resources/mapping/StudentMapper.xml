@@ -123,6 +123,9 @@
         </discriminator>
     </resultMap>
 
+    <!-- sql.id 使用的引用名 也是存放在sqlFragments的key -->
+    <!-- sql.lang 为特定的语句指定语言（驱动类） -->
+    <!-- sql.databaseId 数据库方言设置 数据库方言在 mybatis-config.xml 的 databaseIdProvider 中该设置 -->
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         id,
@@ -165,7 +168,7 @@
         from student
     </select>
 
-    <select id="selList" resultSets="" resultMap="BaseResultMap">
+    <select id="selList" resultSets="" resultMap="BaseResultMap" databaseId="backup-dataSource">
         select
         <include refid="Base_Column_List"/>
         from student
