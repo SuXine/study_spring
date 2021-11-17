@@ -168,7 +168,7 @@
         from student
     </select>
 
-    <select id="selList" resultSets="" resultMap="BaseResultMap" databaseId="backup-dataSource">
+    <select id="selList" resultSets="" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List"/>
         from student
