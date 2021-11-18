@@ -1,5 +1,6 @@
 package com.libra.spring.demo.dao;
 
+import com.libra.spring.demo.dao.req.StudentReq;
 import com.libra.spring.demo.model.entity.Student;
 
 import org.apache.ibatis.annotations.Lang;
@@ -12,13 +13,11 @@ import org.apache.ibatis.annotations.MapKey;import org.apache.ibatis.annotations
  */
 public interface StudentMapper {
 
+    List<Student> selValidCollectionForeignColumn();
 
-
-    int insertSelective(Student student);
+    List<Student> selectByNameAndId(StudentReq req);
 
     void selVoid(ResultHandler demo);
-
-    List<Student> selValidCollectionForeignColumn();
 
     Cursor<Student> selCursor();
 
@@ -27,7 +26,7 @@ public interface StudentMapper {
 
     List<Student> selList();
 
-    List<Student> selectByNameAndId(@Param("name") String name, @Param("id") Long id);
+    int insertSelective(Student student);
 
     int updateById(@Param("updated") Student updated);
 }

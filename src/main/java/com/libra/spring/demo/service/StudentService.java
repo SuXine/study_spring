@@ -2,6 +2,7 @@ package com.libra.spring.demo.service;
 
 import com.libra.spring.demo.dao.DemoResultHandler;
 import com.libra.spring.demo.dao.StudentMapper;
+import com.libra.spring.demo.dao.req.StudentReq;
 import com.libra.spring.demo.model.entity.Student;
 
 import org.apache.ibatis.cursor.Cursor;
@@ -33,11 +34,17 @@ public class StudentService {
 
     @Transactional
     public void select() {
-        List<Student> students = studentMapper.selList();
+        List<Student> students;
+
+        StudentReq req = new StudentReq();
+        req.setName("新");
+
         //        studentMapper.selMap();
         //        studentMapper.selVoid(new DemoResultHandler());
         //        studentMapper.selCursor();
-        //        studentMapper.selectByNameAndId("小绿238718973918", 2L);
+        //        students = studentMapper.selList();
+
+        students = studentMapper.selectByNameAndId(req);
 
         //        List<Student> students = studentMapper.selValidCollectionForeignColumn();
         System.out.println("使用前");
