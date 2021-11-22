@@ -32,10 +32,6 @@
                    resultMap="" typeHandler="org.apache.ibatis.type.StringTypeHandler" scale=""/>
     </parameterMap>
 
-    <resultMap id="idBaseResultMap" type="com.libra.spring.demo.model.entity.Student">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-    </resultMap>
-
     <!-- resultMap.id 存储到configuration的resultMaps中的key 或者在引用中使用 -->
     <!-- resultMap.type 返回的对象类型 -->
     <!-- resultMap.extends 继承的resultMap，会取两者并集 -->
@@ -120,6 +116,10 @@
                 <result property="base" column="weight"/>
             </case>
         </discriminator>
+    </resultMap>
+
+    <resultMap id="idBaseResultMap" type="com.libra.spring.demo.model.entity.Student">
+        <id column="id" jdbcType="BIGINT" property="id"/>
     </resultMap>
 
     <!-- sql.id 使用的引用名 也是存放在sqlFragments的key -->
