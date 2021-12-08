@@ -1,6 +1,10 @@
 server:
   port: 7999
 
+logging:
+  level:
+    com.libra.spring.demo: debug
+
 spring:
   datasource:
     username: root
@@ -15,6 +19,6 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

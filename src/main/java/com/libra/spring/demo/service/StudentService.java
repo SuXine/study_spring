@@ -3,7 +3,9 @@ package com.libra.spring.demo.service;
 import com.libra.spring.demo.dao.DemoResultHandler;
 import com.libra.spring.demo.dao.StudentMapper;
 import com.libra.spring.demo.dao.req.StudentReq;
+import com.libra.spring.demo.model.bo.PageInfo;
 import com.libra.spring.demo.model.entity.Student;
+import com.libra.spring.demo.thread.PageHelper;
 
 import org.apache.ibatis.cursor.Cursor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,7 @@ public class StudentService {
         //        studentMapper.selCursor();
         //        students = studentMapper.selList();
 
+        PageHelper.start(1,2);
         students = studentMapper.selectByNameAndId(req);
 
         //        List<Student> students = studentMapper.selValidCollectionForeignColumn();
