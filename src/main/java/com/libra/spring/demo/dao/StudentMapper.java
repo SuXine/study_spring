@@ -4,7 +4,9 @@ import com.libra.spring.demo.dao.req.StudentReq;
 import com.libra.spring.demo.model.entity.Student;
 
 import org.apache.ibatis.annotations.Lang;
-import org.apache.ibatis.annotations.MapKey;import org.apache.ibatis.annotations.Param;import org.apache.ibatis.cursor.Cursor;import org.apache.ibatis.session.ResultHandler;import java.util.List;import java.util.Map;
+import org.apache.ibatis.annotations.MapKey;import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
+import org.apache.ibatis.cursor.Cursor;import org.apache.ibatis.session.ResultHandler;import java.util.List;import java.util.Map;
 
 /**
  * @description: ${desc}

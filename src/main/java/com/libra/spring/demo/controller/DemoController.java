@@ -5,14 +5,8 @@ import com.libra.spring.demo.service.TeacherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Description: demo
@@ -43,12 +37,6 @@ public class DemoController {
 
     @GetMapping("/insert")
     public String insert(){
-        studentService.insert();
-        return "hello word - insert()";
-    }
-
-    @GetMapping("/demo")
-    public String insert(@RequestParam List<Long> ids){
         studentService.insert();
         return "hello word - insert()";
     }
